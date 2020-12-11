@@ -13,12 +13,14 @@ final class LocationManager: NSObject {
     
     static let shared = LocationManager()
     var location = CLLocation()
-    private let locationManager = CLLocationManager()
+    let locationManager = CLLocationManager()
     
     func checkLocationServices() {
         if CLLocationManager.locationServicesEnabled() {
             setupLocationManager()
             checkAuthorisationStatus()
+            NotificationCenter.default.post(name: .getLocation, object: nil)
+            getLocation()
         } else {
             
         }
@@ -52,8 +54,8 @@ final class LocationManager: NSObject {
             print("Location is eneble")
             return
         }
-        
         location = currentLocation
+        
     }
     
 }
@@ -62,5 +64,7 @@ extension LocationManager: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) { }
     
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) { }
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+       
+    }
 }
